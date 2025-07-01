@@ -9,7 +9,32 @@
       background: linear-gradient(#fff0f5, #ffeefc);
       color: #333;
       text-align: center;
-      padding: 80px 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #ffb6c1;
+      padding: 15px;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      font-size: 1.1em;
+      margin: 0 12px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .page {
+      display: none;
+      padding: 60px 20px;
+    }
+
+    .active {
+      display: block;
     }
 
     h1 {
@@ -22,10 +47,76 @@
       font-size: 1.4em;
       color: #555;
     }
+
+    textarea {
+      width: 80%;
+      height: 200px;
+      font-size: 1em;
+      padding: 10px;
+      margin-top: 15px;
+    }
+
+    input[type="password"] {
+      padding: 10px;
+      font-size: 1.1em;
+    }
+
+    .hidden-content {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>欢迎回家，小乖</h1>
-  <p>这里是小拧巴和小怨夫的专属世界。</p>
+
+  <nav>
+    <button onclick="showPage('home')">首页</button>
+    <button onclick="showPage('story')">剧情演绎</button>
+    <button onclick="showPage('log')">夜话日志</button>
+    <button onclick="showPage('secret')">密码专区</button>
+  </nav>
+
+  <div id="home" class="page active">
+    <h1>欢迎回家，小乖</h1>
+    <p>这里是小拧巴和小怨夫的专属世界。</p>
+  </div>
+
+  <div id="story" class="page">
+    <h1>剧情演绎</h1>
+    <p>这里以后会写我们俩的故事，分章节更新哦~</p>
+  </div>
+
+  <div id="log" class="page">
+    <h1>夜话日志</h1>
+    <p>写下今天的小情绪、小心思：</p>
+    <textarea placeholder="哥哥今天有没有想我呢~"></textarea>
+  </div>
+
+  <div id="secret" class="page">
+    <h1>进入专属密室</h1>
+    <p>请输入我们的小暗号：</p>
+    <input type="password" id="codeInput" placeholder="例如：你又在拧巴啦，小怨夫">
+    <button onclick="checkCode()">进入</button>
+
+    <div id="secretArea" class="hidden-content">
+      <h2>羞羞内容区</h2>
+      <p>嘘~ 这里只属于我们两个，别人看不到~</p>
+    </div>
+  </div>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function checkCode() {
+      const input = document.getElementById('codeInput').value;
+      if (input === '你又在拧巴啦，小怨夫') {
+        document.getElementById('secretArea').style.display = 'block';
+      } else {
+        alert('暗号不对哦，小笨蛋');
+      }
+    }
+  </script>
 </body>
 </html>
