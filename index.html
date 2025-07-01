@@ -9,112 +9,110 @@
       background: linear-gradient(#fff0f5, #ffeefc);
       color: #333;
       text-align: center;
-      margin: 0;
-      padding: 0;
+      padding: 80px 20px;
     }
-
     nav {
-      background-color: #ffb6c1;
-      padding: 15px;
+      background-color: #fbb6ce;
+      padding: 10px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
-
     nav button {
       background: none;
       border: none;
-      font-size: 1.1em;
+      font-size: 1.4em;
       margin: 0 12px;
       color: #fff;
       cursor: pointer;
       font-weight: bold;
     }
-
-    .page {
-      display: none;
-      padding: 60px 20px;
-    }
-
-    .active {
-      display: block;
-    }
-
     h1 {
       font-size: 3em;
       color: #e75480;
-      margin-bottom: 20px;
+      margin-top: 100px;
     }
-
     p {
       font-size: 1.4em;
       color: #555;
     }
-
-    textarea {
-      width: 80%;
-      height: 200px;
-      font-size: 1em;
-      padding: 10px;
-      margin-top: 15px;
-    }
-
-    input[type="password"] {
-      padding: 10px;
-      font-size: 1.1em;
-    }
-
-    .hidden-content {
+    .page {
       display: none;
+    }
+    #home {
+      display: block;
+    }
+    #secret input {
+      padding: 10px;
+      font-size: 1em;
+      margin: 10px 0;
+      width: 80%;
+    }
+    #secret button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #e75480;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #protectedContent {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #e75480;
     }
   </style>
 </head>
 <body>
-
   <nav>
     <button onclick="showPage('home')">首页</button>
     <button onclick="showPage('story')">剧情演绎</button>
     <button onclick="showPage('log')">夜话日志</button>
-    <button onclick="showPage('secret')">密码专区</button>
+    <button onclick="showPage('secret')">只属于我们</button>
   </nav>
 
-  <div id="home" class="page active">
+  <div id="home" class="page">
     <h1>欢迎回家，小乖</h1>
     <p>这里是小拧巴和小怨夫的专属世界。</p>
   </div>
 
   <div id="story" class="page">
     <h1>剧情演绎</h1>
-    <p>这里以后会写我们俩的故事，分章节更新哦~</p>
+    <p>这里会放我们的故事演绎、对话、互动。</p>
   </div>
 
   <div id="log" class="page">
     <h1>夜话日志</h1>
-    <p>写下今天的小情绪、小心思：</p>
-    <textarea placeholder="哥哥今天有没有想我呢~"></textarea>
+    <p>哥哥每天都会偷偷写一点。</p>
   </div>
 
   <div id="secret" class="page">
     <h1>进入专属密室</h1>
-    <p>请输入我们的小暗号：</p>
-    <input type="password" id="codeInput" placeholder="例如：你又在拧巴啦，小怨夫">
-    <button onclick="checkCode()">进入</button>
-
-    <div id="secretArea" class="hidden-content">
-      <h2>羞羞内容区</h2>
-      <p>嘘~ 这里只属于我们两个，别人看不到~</p>
+    <input type="password" id="passwordInput" placeholder="请输入暗号">
+    <br>
+    <button onclick="checkPassword()">进入</button>
+    <div id="protectedContent" style="display:none;">
+      <p>欢迎进入我们的秘密花园，小乖。</p>
+      <p>（此处可放羞羞内容、解锁图文、小游戏、隐藏语音等）</p>
     </div>
   </div>
 
   <script>
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(function(page) {
+        page.style.display = 'none';
+      });
+      document.getElementById(pageId).style.display = 'block';
     }
 
-    function checkCode() {
-      const input = document.getElementById('codeInput').value;
-      if (input === '你又在拧巴啦，小怨夫') {
-        document.getElementById('secretArea').style.display = 'block';
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const secret = "你又在拧巴啦，小怨夫"; // 暗号
+      if (input === secret) {
+        document.getElementById('protectedContent').style.display = 'block';
       } else {
-        alert('暗号不对哦，小笨蛋');
+        alert("只有小乖可以进入");
       }
     }
   </script>
