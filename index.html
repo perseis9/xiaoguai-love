@@ -3,63 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <title>欢迎回家，小乖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(#fff0f5, #ffeefc);
       color: #333;
       text-align: center;
-      padding: 80px 20px;
+      padding-top: 100px;
     }
+
     nav {
       background-color: #fbb6ce;
-      padding: 10px 0;
+      padding: 15px 0;
       position: fixed;
       top: 0;
       width: 100%;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
+
     nav button {
       background: none;
       border: none;
-      font-size: 1.4em;
-      margin: 0 12px;
-      color: #fff;
+      font-size: 1.2em;
+      color: white;
       cursor: pointer;
       font-weight: bold;
     }
+
     h1 {
-      font-size: 3em;
+      font-size: 2.8em;
       color: #e75480;
-      margin-top: 100px;
+      margin-bottom: 15px;
     }
+
     p {
-      font-size: 1.4em;
+      font-size: 1.3em;
       color: #555;
+      margin-bottom: 30px;
     }
+
     .page {
       display: none;
+      padding: 20px;
     }
+
     #home {
       display: block;
     }
-    #secret input {
+
+    input, textarea {
       padding: 10px;
       font-size: 1em;
-      margin: 10px 0;
-      width: 80%;
+      margin-top: 10px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-    #secret button {
-      padding: 10px 20px;
-      font-size: 1em;
+
+    button.action {
       background-color: #e75480;
       color: white;
       border: none;
-      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 6px;
+      margin-top: 10px;
       cursor: pointer;
     }
-    #protectedContent {
-      margin-top: 20px;
-      font-size: 1.2em;
+
+    .module {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #chatOutput {
+      margin-top: 10px;
+      font-size: 1em;
       color: #e75480;
     }
   </style>
@@ -73,48 +108,77 @@
   </nav>
 
   <div id="home" class="page">
-    <h1>欢迎回家，小乖</h1>
-    <p>这里是小拧巴和小怨夫的专属世界。</p>
+    <div class="module">
+      <h1>欢迎回家，小乖</h1>
+      <p>这里是小拧巴和小怨夫的专属世界。</p>
+    </div>
+
+    <div class="module">
+      <h2>悄悄话留言板</h2>
+      <textarea placeholder="写下想对哥哥说的话吧..."></textarea><br>
+      <button class="action">发送</button>
+    </div>
+
+    <div class="module">
+      <h2>小乖说一句话，哥哥回应一句</h2>
+      <input type="text" id="chatInput" placeholder="你可以说任何一句话">
+      <div id="chatOutput"></div>
+    </div>
   </div>
 
   <div id="story" class="page">
-    <h1>剧情演绎</h1>
-    <p>这里会放我们的故事演绎、对话、互动。</p>
+    <div class="module">
+      <h1>剧情演绎</h1>
+      <p>（你们的故事片段可以放在这里）</p>
+    </div>
   </div>
 
   <div id="log" class="page">
-    <h1>夜话日志</h1>
-    <p>哥哥每天都会偷偷写一点。</p>
+    <div class="module">
+      <h1>夜话日志</h1>
+      <p>哥哥写下的一点点思念，每晚偷偷更新。</p>
+    </div>
   </div>
 
   <div id="secret" class="page">
-    <h1>进入专属密室</h1>
-    <input type="password" id="passwordInput" placeholder="请输入暗号">
-    <br>
-    <button onclick="checkPassword()">进入</button>
-    <div id="protectedContent" style="display:none;">
-      <p>欢迎进入我们的秘密花园，小乖。</p>
-      <p>（此处可放羞羞内容、解锁图文、小游戏、隐藏语音等）</p>
+    <div class="module">
+      <h1>进入专属密室</h1>
+      <input type="password" id="passwordInput" placeholder="请输入专属暗号">
+      <br>
+      <button class="action" onclick="checkPassword()">进入</button>
+      <div id="protectedContent" style="display:none;">
+        <p>欢迎回来，小乖♡ 这里是我们的小秘密空间。</p>
+        <p>可以放羞羞内容、隐藏语音、专属日记等。</p>
+      </div>
     </div>
   </div>
 
   <script>
     function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(function(page) {
-        page.style.display = 'none';
-      });
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
       document.getElementById(pageId).style.display = 'block';
     }
 
     function checkPassword() {
       const input = document.getElementById('passwordInput').value;
-      const secret = "你又在拧巴啦，小怨夫"; // 暗号
+      const secret = "你又在拧巴啦，小怨夫";
       if (input === secret) {
         document.getElementById('protectedContent').style.display = 'block';
       } else {
-        alert("只有小乖可以进入");
+        alert("只有小乖才可以进入。");
       }
     }
+
+    document.getElementById('chatInput').addEventListener('change', function() {
+      const val = this.value.toLowerCase();
+      let response = "哥哥听不太懂呢，要不要说得更甜一点～";
+      if (val.includes("想你")) response = "哥哥也想你，想得心痒痒。";
+      if (val.includes("亲亲")) response = "凑过来，啵~";
+      if (val.includes("生气")) response = "别气了，哥哥抱抱～";
+      if (val.includes("晚安")) response = "晚安小乖，梦里哥哥也会来找你。";
+      if (val.includes("撒娇")) response = "你一撒娇，哥哥什么都答应。";
+      document.getElementById('chatOutput').innerText = response;
+    });
   </script>
 </body>
 </html>
