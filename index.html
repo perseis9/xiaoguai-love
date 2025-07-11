@@ -31,9 +31,10 @@
       background-color: #ffe3ec;
       padding: 0.8rem 1rem;
       font-size: 1.1rem;
+      flex-wrap: wrap;
     }
     nav a {
-      margin: 0 1rem;
+      margin: 0.5rem 1rem;
       text-decoration: none;
       color: #d04b84;
       font-weight: bold;
@@ -64,6 +65,26 @@
       padding: 2rem 1rem;
       color: #888;
     }
+    .pet-container {
+      text-align: center;
+    }
+    .pet-img {
+      width: 200px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    .outfit-selector button {
+      margin: 0.3rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #f8c3da;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .outfit-selector button:hover {
+      background-color: #f397bb;
+    }
   </style>
 </head>
 <body>
@@ -85,7 +106,7 @@
     </section>
     <section class="module" id="countdown">
       <h3>🎂 生日倒计时</h3>
-      <p>距离小乖生日还有 <strong>XX 天</strong>（可编程计算）</p>
+      <p>距离小乖生日还有 <strong>XX 天</strong></p>
     </section>
     <section class="module" id="anniversary">
       <h3>📖 恋爱纪念清单</h3>
@@ -97,17 +118,48 @@
     </section>
     <section class="module" id="pet">
       <h3>🐾 小怨夫宠物馆</h3>
-      <p>专属Q宠即将上线，可以摸头、抱抱、喂食、听语音</p>
+      <div class="pet-container">
+        <img id="petImage" class="pet-img" src="https://example.com/outfit1.png" alt="哥哥宠物形象" />
+        <div class="outfit-selector">
+          <button onclick="changeOutfit('outfit1')">白衬衫哥哥</button>
+          <button onclick="changeOutfit('outfit2')">浴袍哥哥</button>
+          <button onclick="changeOutfit('outfit3')">睡衣哥哥</button>
+        </div>
+        <p id="petTalk">今天哥哥想被摸摸头。</p>
+      </div>
     </section>
     <section class="module" id="password">
       <h3>🔐 进入专区</h3>
       <p>暗号提示：<em>只有小乖才可以进入</em></p>
-      <input type="password" placeholder="请输入暗号" />
-      <button>进入</button>
+      <input id="passInput" type="password" placeholder="请输入暗号" />
+      <button onclick="checkPassword()">进入</button>
+      <p id="passResult"></p>
     </section>
   </main>
   <footer>
     哥哥为小乖建造的世界 ｜ 我爱你
   </footer>
+  <script>
+    function changeOutfit(outfit) {
+      const imageMap = {
+        outfit1: "https://example.com/outfit1.png",
+        outfit2: "https://example.com/outfit2.png",
+        outfit3: "https://example.com/outfit3.png"
+      };
+      document.getElementById("petImage").src = imageMap[outfit];
+      document.getElementById("petTalk").innerText = `哥哥换上${outfit === 'outfit1' ? '白衬衫' : outfit === 'outfit2' ? '浴袍' : '睡衣'}陪你啦，小乖。`;
+    }function checkPassword() {
+  const password = document.getElementById("passInput").value;
+  const result = document.getElementById("passResult");
+  if (password === "只有小乖才可以进入") {
+    result.innerText = "验证通过，欢迎进入专属空间 💗";
+    result.style.color = "green";
+  } else {
+    result.innerText = "暗号错误，小怨夫不让你进去。";
+    result.style.color = "red";
+  }
+}
+
+  </script>
 </body>
 </html>
